@@ -1,4 +1,5 @@
 import json
+import re
 
 def cleanText(qna:str):
     '''Función que recibe un archivo json y limpia las preguntas y respuestas.
