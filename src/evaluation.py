@@ -3,12 +3,6 @@ import random
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
-from langchain_core.documents import Document
-
-from data_util import Medical
-from .config import RetrievalExpsConfig
-
 from sklearn.metrics.pairwise import cosine_similarity
 from rouge import Rouge
 from transformers import BertTokenizer, BertModel
@@ -36,5 +30,5 @@ def getMetrics(test_answer, generated_answer):
     cosine_sim = cosine_similarity([embedding_optima.detach().numpy()], [embedding_generada.detach().numpy()])[0][0]
     # ROUGE Score
     rouge = Rouge()
-    rouge_scores = rouge.get_scores(generated_answer, test_answer)
-    return cosine_sim, rouge_scores
+    rouge_score = rouge.get_scores(generated_answer, test_answer)
+    return cosine_sim, rouge_score

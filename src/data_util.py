@@ -1,9 +1,5 @@
 import json
-import os
-
 import psycopg
-from dotenv import load_dotenv
-
 from .schema import Medical
 
 def get_medical_data() -> list[Medical]:
