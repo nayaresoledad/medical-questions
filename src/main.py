@@ -15,7 +15,10 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 from .config import RetrievalExpsConfig
-from retrieval.evaluation import (
+from tqdm import tqdm
+
+from data_util import get_medical_data
+from .evaluation import (
     calc_mrr,
     comparar_resultado_con_esperado,
     is_in_results,
