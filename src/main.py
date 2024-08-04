@@ -12,9 +12,6 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 import colorlog
 import mlflow
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.vectorstores import FAISS
-from langchain_core.documents import Document
 from .config import RetrievalExpsConfig
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
@@ -28,7 +25,7 @@ from .evaluation import (
 )
 from .prompt import generatePrompt
 
-from inference import (preprocesado, retrieval, postprocesado)
+from inference import (preprocesado, postprocesado)
 
 
 CACHE_PATH = Path(__file__).parent / ".cache"

@@ -17,25 +17,6 @@ def preprocesado():
     query=str(querie_input)
     return query
 
-def retrieval(
-    query: str,
-    index: FAISS,
-    config: RetrievalExpsConfig,
-    logger: logging.Logger,
-    verbose: bool = False,
-) -> tuple[list[Document], float]:
-    """
-    Pipeline para recuperar documentos similares a la query dada. Devuelve los documentos, y el tiempo empleado
-    """
-    if verbose:
-        logger.info(f"Recuperando documentos similares a la query {query}...")
-    t = time.time()
-    retrieved_docs = index.similarity_search(query, k=10)
-    t_elapsed = time.time() - t
-    if verbose:
-        logger.debug(f"{len(retrieved_docs)} recuperados en {t_elapsed:.0f} segundos.")
-    return retrieved_docs, t_elapsed
-
 def postprocesado(generated_answer: str, satisfaccion: int, query: str, id_sesion: str):
     sesiones = {}
     sesiones["query"]= query
