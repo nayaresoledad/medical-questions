@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Callable
 
 from data_util import Medical
-from .indexing_pipeline_utils import get_subject_message_answer_type
+from .prompt import get_subject_message_answer_type
 from .retrieval_pipeline_utils import clean_query_txt
 
 
@@ -27,6 +27,8 @@ class RetrievalExpsConfig:
         self.normalize_embeddings: bool = False  # Normalizar los embeddings a longitud 1 antes de indexarlos
 
         self._query_prepro_fn: Callable = clean_query_txt
+
+        self.quantization: bool = False
 
     ## NO MODIFICAR A PARTIR DE AQUÍ ##
 
