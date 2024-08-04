@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/744517400457037652/c9f190ec240747f7ac52fdacb1efd8e9/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '744517400457037652'
+lifecycle_stage: active
+run_id: c9f190ec240747f7ac52fdacb1efd8e9
+run_name: defiant-bird-208
+run_uuid: c9f190ec240747f7ac52fdacb1efd8e9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722792633216
+status: 1
+tags: []
+user_id: perseis

@@ -12,20 +12,21 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 import colorlog
 import mlflow
-from .config import RetrievalExpsConfig
+from src.config import RetrievalExpsConfig
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import torch
 
-from data_util import get_medical_data
-from .evaluation import (
+from src.data_util import get_medical_data
+from src.evaluation import (
     load_test_queries,
     get_sentence_embedding,
     getMetrics
 )
-from .prompt import generatePrompt
 
-from inference import (preprocesado, postprocesado)
+from src.prompt import generatePrompt
+
+from src.inference import (preprocesado, postprocesado)
 
 
 CACHE_PATH = Path(__file__).parent / ".cache"

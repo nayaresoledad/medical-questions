@@ -10,7 +10,7 @@ import torch
 import numpy as np
 
 
-def load_test_queries(ruta: str = "../data_processed/test/test.json"):
+def load_test_queries(ruta: str = "./data_processed/test/test.json"):
     with open(ruta, "r") as f:
         queries = json.load(f)
     return queries
@@ -19,7 +19,7 @@ def get_sentence_embedding(sentence):
     # Cosine Similarity con BERT
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
     model = BertModel.from_pretrained('bert-base-uncased')
-    inputs = tokenizer(sentence, return_tensors='pt')
+    inputs = tokenizer(sentence, padding=True, truncation=True, max_length=512, return_tensors='pt')
     outputs = model(**inputs)
     return outputs.last_hidden_state.mean(dim=1).squeeze()
 

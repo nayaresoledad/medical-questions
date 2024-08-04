@@ -1,24 +1,22 @@
 from __future__ import annotations
 
-from langchain_core.documents import Document
-
-from data_util import Medical
-import config
+from src.data_util import Medical
+import src.config
 
 
-def create_docs_to_embedd(medical_quest: list[Medical], config: config.RetrievalExpsConfig) -> list[Document]:
-    """
-    Convierte una lista de objetos `Medical` a una lista the objetos `Document`(usada por Langchain).
-    En esta función se decide que parte de los datos será usado como embeddings y que parte como metadata.
-    """
-    movies_as_docs = []
-    for medical in medical_quest:
-        content = config.text_to_embed_fn(medical)
-        metadata = medical.model_dump()
-        doc = Document(page_content=content, metadata=metadata)
-        movies_as_docs.append(doc)
+def generatePrompt(medical_data: list[Medical], user_query: str):
+  B_INST, E_INST = "<s>[INST]", "[/INST]"
+  B_SYS, E_SYS = "<<SYS>>\n", "\n<</SYS>>\n\n"
+  DEFAULT_SYSTEM_PROMPT = """\
+  You are an AI Medical Chatbot Assistant, provide comprehensive and informative responses to your inquiries.
+  If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information."""
+  context = "These are examples of how you must answer: "
+  for item in medical_data:
+      pregunta = item['MESSAGE']
+      respuesta = item['ANSWER']
+      context += f"Q: {pregunta}\nA: {respuesta}\n\n"
+  SYSTEM_PROMPT = B_SYS + DEFAULT_SYSTEM_PROMPT + E_SYS + context
+  instruction = f"User asks: {user_query}\n"
+  prompt = B_INST + SYSTEM_PROMPT + instruction + E_INST
 
-    return movies_as_docs
-
-def get_subject_message_answer_type(medical_data: Medical) -> str:
-    return f'Subject: {medical_data.subject}\n Message: {medical_data.message} Answer: {medical_data.answer}, Type: {medical_data.type}'
+  return prompt

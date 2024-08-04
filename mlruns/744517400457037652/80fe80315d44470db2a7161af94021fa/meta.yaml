@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/744517400457037652/80fe80315d44470db2a7161af94021fa/artifacts
+end_time: 1722791339380
+entry_point_name: ''
+experiment_id: '744517400457037652'
+lifecycle_stage: active
+run_id: 80fe80315d44470db2a7161af94021fa
+run_name: crawling-owl-968
+run_uuid: 80fe80315d44470db2a7161af94021fa
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722791339362
+status: 4
+tags: []
+user_id: perseis

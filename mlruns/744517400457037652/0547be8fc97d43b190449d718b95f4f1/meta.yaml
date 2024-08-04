@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/744517400457037652/0547be8fc97d43b190449d718b95f4f1/artifacts
+end_time: 1722791881912
+entry_point_name: ''
+experiment_id: '744517400457037652'
+lifecycle_stage: active
+run_id: 0547be8fc97d43b190449d718b95f4f1
+run_name: fearless-grub-242
+run_uuid: 0547be8fc97d43b190449d718b95f4f1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722791881763
+status: 4
+tags: []
+user_id: perseis

@@ -2,9 +2,8 @@ from __future__ import annotations
 
 from typing import Callable
 
-from data_util import Medical
-from .prompt import get_subject_message_answer_type
-from .retrieval_pipeline_utils import clean_query_txt
+from src.data_util import Medical
+from src.retrieval_pipeline_utils import clean_query_txt
 
 
 class RetrievalExpsConfig:
@@ -17,9 +16,6 @@ class RetrievalExpsConfig:
     """
 
     def __init__(self):
-
-        # Función a emplear para generar el texto a indexar con embeddings; Debe tomar como input un objeto `Movie` y devolver un string
-        self._text_to_embed_fn: Callable = get_subject_message_answer_type
 
         # Parámetros para la generación de embeddings
 
@@ -50,7 +46,6 @@ class RetrievalExpsConfig:
         """
         return {
             "model_name": self.model_name,
-            "text_to_embed_fn": self._text_to_embed_fn.__name__,
             "normalize_embeddings": self.normalize_embeddings,
             "query_prepro_fn": self._query_prepro_fn.__name__,
         }

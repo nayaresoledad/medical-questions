@@ -6,8 +6,8 @@ import os
 
 from langchain_core.documents import Document
 
-from data_util import Medical
-from config import RetrievalExpsConfig
+from src.data_util import Medical
+from src.config import RetrievalExpsConfig
 from langchain_community.vectorstores import FAISS
 
 

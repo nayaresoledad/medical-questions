@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/744517400457037652/d35fa2c8d5064eae874453b6669fc564/artifacts
+end_time: 1722791989221
+entry_point_name: ''
+experiment_id: '744517400457037652'
+lifecycle_stage: active
+run_id: d35fa2c8d5064eae874453b6669fc564
+run_name: zealous-squirrel-73
+run_uuid: d35fa2c8d5064eae874453b6669fc564
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722791989203
+status: 4
+tags: []
+user_id: perseis

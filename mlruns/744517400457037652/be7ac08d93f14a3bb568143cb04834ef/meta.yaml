@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/744517400457037652/be7ac08d93f14a3bb568143cb04834ef/artifacts
+end_time: 1722792518228
+entry_point_name: ''
+experiment_id: '744517400457037652'
+lifecycle_stage: active
+run_id: be7ac08d93f14a3bb568143cb04834ef
+run_name: smiling-fawn-433
+run_uuid: be7ac08d93f14a3bb568143cb04834ef
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722792501935
+status: 4
+tags: []
+user_id: perseis
