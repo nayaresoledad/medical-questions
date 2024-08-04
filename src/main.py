@@ -28,7 +28,7 @@ from .evaluation import (
 )
 from .prompt import generatePrompt
 
-from retrieval.inference import (preprocesado, retrieval, postprocesado)
+from inference import (preprocesado, retrieval, postprocesado)
 
 
 CACHE_PATH = Path(__file__).parent / ".cache"
@@ -137,12 +137,12 @@ if __name__ == "__main__":
 
             # Cargamos datos de train y de test
             medical_data = get_medical_data()
-            test_queries = load_test_queries()
-            logger.info(f"Evaluando el modelo con {len(test_queries):,} queries...")
 
             if not os.path.isfile(ruta_embedding_test):
                 generate_embeddings_pipeline(logger)
 
+            test_queries = load_test_queries("../data_processed/test/test_w_embedding.json")
+            logger.info(f"Evaluando el modelo con {len(test_queries):,} queries...")
             # Cargamos el modelo
             model, tokenizer, device= getModel(exp_config)
 
@@ -155,8 +155,10 @@ if __name__ == "__main__":
                 query, expected_response = question["MESSAGE"], question["ANSWER"]
                 prompt = generatePrompt(medical_data, query)
                 response, t_elapsed = generate_text(model, tokenizer, prompt, device)
+                response_embedding= get_sentence_embedding(response)
+                expected_embedding = question['EMBEDDING']
                 accum_time += t_elapsed ##
-                cosine_sim, rouge_score = getMetrics(expected_response, response)
+                cosine_sim, rouge_score = getMetrics(expected_response, expected_embedding, response, response_embedding)
                 cosine.append(cosine_sim)
                 rouge.append(rouge_score)
                 n+=1
@@ -171,30 +173,19 @@ if __name__ == "__main__":
                     "secs_per_query": round(accum_time / n, 2),
                 }
             )
-            ranks_fig = plot_rank_distribution(ranks)
-            mlflow.log_figure(ranks_fig, "rank_distribution.png")
 
     else:
         exp_config = RetrievalExpsConfig()
         id_sesion = str(datetime.now())
         user_queries = preprocesado()
         logger.info(f"Cargando el índice con los embeddings..")
-        embedder = load_embedder(exp_config)
-        embedder.show_progress = False
-        index = FAISS.load_local(
-            CACHE_PATH / f"faiss_{exp_config.index_config_unique_id}",
-            embeddings=embedder,
-            allow_dangerous_deserialization=True,
-        )
-        docs_for_user, t_elapsed = retrieval(user_queries, index, exp_config, logger)
-        retrieved_data_for_user ={}
-        for doc in docs_for_user:
-            retrieved_data_for_user[doc.metadata["movie_id"]] = {}
-            retrieved_data_for_user[doc.metadata["movie_id"]]["title_es"]=doc.metadata["title_es"]
-            retrieved_data_for_user[doc.metadata["movie_id"]]["country"]=doc.metadata["country"]
-            retrieved_data_for_user[doc.metadata["movie_id"]]["cast_top_5"]=doc.metadata["cast_top_5"]
-        
-        print(f"Le recomendamos estas películas:\n {retrieved_data_for_user}")
+        # Cargamos el modelo
+        model, tokenizer, device= getModel(exp_config)
+        medical_data = get_medical_data()
+        prompt = generatePrompt(medical_data, user_queries)
+        generated_text, t_elapsed = generate_text(model, tokenizer, prompt, device)
+
+        print(generated_text)
         satisfaccion = input("Indique su grado de satisfacción, por favor, nos ayuda a mejorar. Puntúe del 0 al 10: ")
         satisfaccion = int(satisfaccion)
-        postprocesado(retrieved_data_for_user, satisfaccion, user_queries, id_sesion)
+        postprocesado(generated_text, satisfaccion, user_queries, id_sesion)
